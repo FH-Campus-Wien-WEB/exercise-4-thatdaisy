@@ -89,7 +89,10 @@ function addMovie(imdbID) {
       if (response.status === 201) {
         // Task 2.2: Make sure to remove the added movie from the search results to avoid
         // giving the user the option to add it again.
-    
+        const resultEntry = document.getElementById(`result-${imdbID}`);
+        if (resultEntry) {
+          resultEntry.remove();
+        }
         loadMovies();
         updateGenres();
       } else if (response.status === 200) {
@@ -136,7 +139,23 @@ function searchMovies(query) {
       // Task 2.2: Render the results returned from the server. Make sure to
       // include an "Add" button for each result that calls `addMovie(imdbID)` when clicked.
       // There is a second part to this task, in `addMovie`
-
+      if (results.length === 0) {
+        new ElementBuilder("p").text(messages.noResultsFound).appendTo(resultsDiv);
+        return;
+      }
+ 
+      for (const movie of results) {
+        const addBtn = new ButtonBuilder("Add").onclick(() => {
+          console.log('Add clicked, imdbID:', movie.imdbID);
+          addMovie(movie.imdbID);
+        });
+        
+        new ElementBuilder("div")
+          .with("id", `result-${movie.imdbID}`)
+          .append(new ElementBuilder("span").text(`${movie.Title} (${movie.Year ?? '?'})`))
+          .append(addBtn)
+          .appendTo(resultsDiv);
+      }
     })
     .catch(error => {
       console.error('Search failed:', error);

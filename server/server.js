@@ -102,11 +102,67 @@ app.put("/movies/:imdbID", requireLogin, function (req, res) {
     // Task 2.3: Fetch the movie data from OmdbAPI, follow the pattern used further down 
     // in the GET /search endpoint. Implement conversion of the OmdbAPI response to the 
     // movie format used in the frontend. Make sure to handle errors and timeouts properly.
+    const url = `http://www.omdbapi.com/?i=${encodeURIComponent(imdbID)}&apikey=${config.omdbApiKey}`;
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), config.omdbTimeoutMs);
+ 
+    fetch(url, { signal: controller.signal })
+      .then(apiRes => {
+        clearTimeout(timeoutId);
+        if (!apiRes.ok) {
+          return res.sendStatus(apiRes.status);
+        }
+        return apiRes.text().then(data => {
+          let omdbResult;
+          try {
+            omdbResult = JSON.parse(data);
+          } catch (parseError) {
+            console.error('Failed to parse OMDb response:', parseError);
+            return res.sendStatus(500);
+          }
+ 
+          if (omdbResult.Response !== 'True') {
+            console.error('OMDb returned error:', omdbResult.Error);
+            return res.sendStatus(404);
+          }
+ 
+          const movie = mapMovie(omdbResult);
+          movieModel.setUserMovie(username, imdbID, movie);
+          res.sendStatus(201);
+        });
+      })
+      .catch(err => {
+        clearTimeout(timeoutId);
+        if (err.name === 'AbortError') {
+          console.error('OMDb API request timeout');
+          return res.sendStatus(504);
+        }
+        console.error('OMDb API error:', err);
+        res.sendStatus(500);
+      });
   } else {
     movieModel.setUserMovie(username, imdbID, req.body);
     res.sendStatus(200);
   }
 });
+
+function mapMovie(omdb) {
+  return {
+    imdbID:     omdb.imdbID,
+    Title:      String(omdb.Title),
+    Released:   new Date(omdb.Released),
+    Runtime:    parseInt(omdb.Runtime),
+    Genres:     omdb.Genre.split(', '),
+    Directors:  omdb.Director.split(', '),
+    Writers:    omdb.Writer.split(', '),
+    Actors:     omdb.Actors.split(', '),
+    Plot:       String(omdb.Plot),
+    Poster:     omdb.Poster,
+    Metascore:  parseFloat(omdb.Metascore),
+    imdbRating: parseFloat(omdb.imdbRating)
+  };
+}
 
 app.delete("/movies/:imdbID", requireLogin, function (req, res) {
   const username = req.session.user.username;

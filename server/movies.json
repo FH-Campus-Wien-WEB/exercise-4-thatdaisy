@@ -166,6 +166,62 @@
       "Poster": "https://m.media-amazon.com/images/M/MV5BZGRiZDZhZjItM2M3ZC00Y2IyLTk3Y2MtMWY5YjliNDFkZTJlXkEyXkFqcGc@._V1_SX300.jpg",
       "Metascore": 88,
       "imdbRating": 8.5
+    },
+    "tt14824600": {
+      "imdbID": "tt14824600",
+      "Title": "The Lord of the Rings: The War of the Rohirrim",
+      "Released": "2024-12-12T23:00:00.000Z",
+      "Runtime": 134,
+      "Genres": [
+        "Animation",
+        "Action",
+        "Adventure"
+      ],
+      "Directors": [
+        "Kenji Kamiyama"
+      ],
+      "Writers": [
+        "Jeffrey Addiss",
+        "Will Matthews",
+        "Phoebe Gittins"
+      ],
+      "Actors": [
+        "Brian Cox",
+        "Gaia Wise",
+        "Miranda Otto"
+      ],
+      "Plot": "A sudden attack by Wulf, a clever and traitorous lord of Rohan seeking vengeance for the death of his father, forces Helm Hammerhand, the King of Rohan, and his people to make a daring last stand in the ancient stronghold of the H...",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BOTg4OTgyMDYtMDA0NC00ZjJhLWJiOGMtMjlkM2ZjNTgxNGI0XkEyXkFqcGc@._V1_SX300.jpg",
+      "Metascore": 54,
+      "imdbRating": 6.3
+    },
+    "tt0052357": {
+      "imdbID": "tt0052357",
+      "Title": "Vertigo",
+      "Released": "1958-05-27T23:00:00.000Z",
+      "Runtime": 128,
+      "Genres": [
+        "Mystery",
+        "Romance",
+        "Thriller"
+      ],
+      "Directors": [
+        "Alfred Hitchcock"
+      ],
+      "Writers": [
+        "Alec Coppel",
+        "Samuel A. Taylor",
+        "Pierre Boileau"
+      ],
+      "Actors": [
+        "James Stewart",
+        "Kim Novak",
+        "Barbara Bel Geddes"
+      ],
+      "Plot": "A former San Francisco police detective juggles wrestling with his personal demons and becoming obsessed with the hauntingly beautiful woman he has been hired to trail, who may be deeply disturbed.",
+      "Poster": "https://m.media-amazon.com/images/M/MV5BNzEyZTUxMWItMGVhYy00Y2NlLTljYTMtYzBmMzI1YmUyMDBkXkEyXkFqcGc@._V1_QL75_UX380_CR0,13,380,562_.jpg",
+      "Metascore": 100,
+      "imdbRating": 8.2
     }
   }
 }
